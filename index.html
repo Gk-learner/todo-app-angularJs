@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
+        <style>
+            body {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 100vh;
+                margin: 0;
+                font-size: 20px;
+                color: white;
+                background-color: rgb(190, 231, 217);
+            }
+
+            .task-list-container {
+                text-align: center;
+                /* width: 400px; */
+            }
+
+            ul {
+                list-style-type: none;
+                padding: 0;
+            }
+
+            li {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin-bottom: 10px;
+            }
+
+            .remove-task {
+                cursor: pointer;
+                color: rgb(70, 4, 4);
+                margin-left: 10px;
+            }
+            button {
+                margin-left: 20px;
+                padding: 1px 8px;
+                color: black;
+            }
+        </style>
+    </head>
+
+    <body>
+        <script>
+            var app = angular.module("my-app", []);
+            app.controller("myCtrl", function ($scope) {
+                $scope.taskList = [
+                    "Learn Angular",
+                    "Create Project",
+                    "Prepare for Interview",
+                    "Crack it",
+                    "Enjoy",
+                    "Keep Learning",
+                ];
+                $scope.addMore = function () {
+                    $scope.errorText = "";
+                    if ($scope.taskList.indexOf($scope.addItem) == -1) {
+                        $scope.taskList.push($scope.addItem);
+                        $scope.addItem = " ";
+                    } else {
+                        $scope.errorText = "Item already in your list";
+                        $scope.addItem = " ";
+                    }
+                };
+                $scope.removeIt = function (i) {
+                    $scope.taskList.splice(i, 1);
+                };
+            });
+        </script>
+        <div ng-app="my-app" ng-controller="myCtrl" class="task-list-container">
+            <h1>My Task List</h1>
+            <ul>
+                <li ng-repeat="x in taskList">
+                    <span>{{x}}</span>
+                    <span class="remove-task" ng-click="removeIt($index)">✖</span>
+                </li>
+            </ul>
+            <input ng-model="addItem" /><button ng-click="addMore()">Add More</button>
+            <p style="color: red">{{errorText}}</p>
+        </div>
+    </body>
+</html>
